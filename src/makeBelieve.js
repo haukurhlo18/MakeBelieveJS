@@ -190,7 +190,7 @@ const ajax = (config) => {
     xhr.onerror = c.fail;
 
     xhr.onload = function () {
-        if (xhr.status === 200 && c.success !== null) {
+        if (xhr.status >= 200 && xhr.status < 300 && c.success !== null) {
             c.success(xhr.response)
         }
     };
