@@ -12,7 +12,7 @@ const getType = (object) => {
 };
 
 const toCamelCase = (subject, separator = ' ') => {
-    subject = subject.toLowerCase().split('-');
+    subject = subject.toLowerCase().split(separator);
 
     subject.forEach(function (item, index) {
         if (index > 0) {
@@ -57,7 +57,7 @@ const makeBelieve = class {
     }
 
     css(property, value) {
-        property = toCamelCase(property);
+        property = toCamelCase(property, '-');
         this.forEach(function (n, i) {
             n.style[property] = value;
         });
