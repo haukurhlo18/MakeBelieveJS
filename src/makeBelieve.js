@@ -59,11 +59,9 @@ const makeBelieve = class {
 
     css(property, value) {
         property = toCamelCase(property, '-');
-        console.log(value)
         this.forEach(function (n, i) {
             n.style[property] = value;
         });
-        
         return this;
     }
 
@@ -74,9 +72,10 @@ const makeBelieve = class {
         });
         return new makeBelieve(ancestors);
     }
-    //Selector defaults to * to fetch all, in the case of an empty 
+
+    // Selector defaults to * to fetch all, in the case of an empty
     grandParent(selector = '*'){
-        //Return the parents of the parents
+        // Return the parents of the parents
         return this.parent().parent(selector);
     }
 
