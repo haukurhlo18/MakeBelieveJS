@@ -160,6 +160,7 @@ const makeBelieveInit = (selector) => {
 
 const ajaxDefaults = {
     url: null,
+    method: 'GET',
     timeout: null,
     data: {},
     headers: [],
