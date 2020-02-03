@@ -137,8 +137,8 @@ which represents a valid HTML or an actual DOM element
 </div>
 
 <script>
-    __('.the-appender').prepend('<p>I am an appended paragraph!</p>');
-    __('.the-appender').prepend(
+    __('.the-appender').append('<p>I am an appended paragraph!</p>');
+    __('.the-appender').append(
         document.createElement('p')
             .appendChild(
                 document.createTextNode('I am an appended paragraph!')
