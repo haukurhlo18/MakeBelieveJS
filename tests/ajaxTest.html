@@ -5,7 +5,35 @@
         <script src="../src/makeBelieve.js"></script>
     </head>
     <body>
-        <!--Test go here-->
+        <script>
+
+            function basicAjax(url) {
+                __.ajax({
+                    url: url,
+                    method: 'GET',
+                    data: {},
+                    headers: [],
+                    success: function (res) {
+                        console.log('Success: ' + res);
+                    },
+                    fail: function (error) {
+                        console.log('Error: ' + error);
+                    },
+                    beforeSend: null,
+                });
+            }
+
+            // Try basic GET request, with 200 OK response
+            basicAjax('https://serene-island-81305.herokuapp.com/api/200');
+
+            // Try basic GET request, with 201 Created
+            basicAjax('https://serene-island-81305.herokuapp.com/api/201');
+
+            // Try basic GET request, with 404 Not found
+            basicAjax('https://serene-island-81305.herokuapp.com/api/404');
+
+            // Try some POST requests ?
+        </script>
     </body>
 </html> 
 
