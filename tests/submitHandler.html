@@ -5,7 +5,18 @@
         <script src="../src/makeBelieve.js"></script>
     </head>
     <body>
-        <!--Test go here-->
+        <form id="my-form">
+            <input type="text" id="username" name="username" />
+            <input type="password" id="password" name="password" />
+            <button type="submit">Submit</button>
+        </form>
+        
+        <script>
+            __('#my-form').onSubmit(function (evt) {
+                // Process the form
+                alert("I've been submitted")
+            });
+        </script>
     </body>
 </html> 
 

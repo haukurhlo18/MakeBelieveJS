@@ -5,7 +5,27 @@
         <script src="../src/makeBelieve.js"></script>
     </head>
     <body>
-        <!--Test go here-->
+        // Before
+        <div class="the-appender">
+            <h2>I am the appender!</h2>
+        </div>
+
+        <script>
+            __('.the-appender').append('<p>I am an appended paragraph!</p>');
+            __('.the-appender').append(
+                document.createElement('p')
+                    .appendChild(
+                        document.createTextNode('I am an appended paragraph!')
+                    )
+            );
+        </script>
+
+        // After
+        <div class="the-appender">
+            <h2>I am the appender!</h2>
+            <p>I am an appended paragraph!</p>
+            <p>I am an appended paragraph!</p>
+        </div>
     </body>
 </html> 
 
