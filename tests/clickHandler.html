@@ -5,7 +5,32 @@
         <script src="../src/makeBelieve.js"></script>
     </head>
     <body>
+        <div class="root">
+            <div class="ancestor-sib"></div>
+            <div class="ancestor">
+                <div id="some-div">
+                    <div id="grandfather">
+                        <form>
+                            <input type="text" id="username" name="username" />
+                            <input type="password" id="password" name="password" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         
+        <script>
+            // Returns the div with the class .ancestor
+            var ancestor = __('#password').ancestor('.ancestor');
+            // Returns the div with the class .root
+            var rootElem = __('#password').ancestor('.root');
+            // Returns an empty object
+            var ancestorSib = __('#password').ancestor('.ancestor-sib');
+            __('#password').onClick(function (evt) {
+                // Logs the current password to the console
+                console.log(evt.target.value);
+            });
+        </script>
     </body>
 </html> 
 

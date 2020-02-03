@@ -5,7 +5,19 @@
         <script src="../src/makeBelieve.js"></script>
     </head>
     <body>
-        <!--Test go here-->
+        <body>
+            <form id="my-form">
+                <input type="text" id="username" name="username" />
+                <input type="password" id="password" name="password" />
+            </form>
+            
+            <script>
+                __('#username').onInput(function (evt) {
+                    // Process the input
+                    console.log(evt.target.value)
+                });
+            </script>
+        </body>
     </body>
 </html> 
 

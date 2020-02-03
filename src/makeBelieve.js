@@ -19,7 +19,7 @@ const toCamelCase = (subject, separator = ' ') => {
             subject[index] = subject[index][0].toUpperCase() + subject[index].substr(1);
         }
     });
-
+    
     return subject.join('');
 };
 
@@ -59,9 +59,11 @@ const makeBelieve = class {
 
     css(property, value) {
         property = toCamelCase(property, '-');
+        console.log(value)
         this.forEach(function (n, i) {
             n.style[property] = value;
         });
+        
         return this;
     }
 
