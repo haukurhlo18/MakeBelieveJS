@@ -74,7 +74,6 @@ const makeBelieve = class {
     }
     //Selector defaults to * to fetch all, in the case of an empty 
     grandParent(selector = '*'){
-        this._elements.parent;
         //Return the parents of the parents
         return this.parent().parent(selector);
     }
