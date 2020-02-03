@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Testing</title>
+        <script src="../src/makeBelieve.js"></script>
+    </head>
+    <body>
+        <div id="grandfather">
+            <form>
+                <input type="text" id="username" name="username" />
+                <input type="password" id="password" name="password" />
+            </form>
+        </div>
+        
+        <script>
+            // Returns the div with the id #grandfather
+            var grandParent = __('#password').grandParent();
+            // Returns the same div
+            var idGrandParent = __('#password').grandParent('#grandfather');
+            // Returns an empty object
+            var emptyGrandParent = __('#password').grandParent('#unknownId');
+        </script>
+    </body>
+</html> 
