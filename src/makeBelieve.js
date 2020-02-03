@@ -7,24 +7,45 @@
 
 'use strict';
 
-const makeBelieve = class {
+const getType = (object) => {
+    return object.constructor.name;
+};
 
-    _elements = [];
+const toCamelCase = (subject, separator = ' ') => {
+    subject = subject.toLowerCase().split('-');
 
-    constructor(selector) {
-        this.selector = selector;
-        this.refresh();
+    subject.forEach(function (item, index) {
+        if (index > 0) {
+            subject[index] = subject[index][0].toUpperCase() + subject[index].substr(1);
+        }
+    });
+
+    return subject.join('');
+};
+
+const matchAncestor = (child, selector) => {
+    const parent = child.parentElement;
+
+    if (parent === null) {
+        return {};
     }
 
-    refresh() {
-        const elements = document.querySelectorAll(this.selector);
-        for (const element of elements) {
-            this._elements.push(element);
-        }
-    };
+    if (parent.matches(selector)) {
+        return parent;
+    }
+    return matchAncestor(parent, selector)
+};
 
-    get type() {
-        return Object.getPrototypeOf(this.selector);
+const makeBelieve = class {
+
+    constructor(selector) {
+        if (getType(selector) === 'String') {
+            this._elements = document.querySelectorAll(selector);
+        } else if (getType(selector) === 'Array') {
+            this._elements = selector;
+        } else {
+            this._elements = [selector];
+        }
     }
 
     get length() {
@@ -35,23 +56,102 @@ const makeBelieve = class {
         this._elements.forEach(callback);
     }
 
-    parent(selector = undefined) {
-        const el = this._elements[0];
-        if (selector === undefined) {
-            return el.parentElement;
-        }
-
-        if (selector.test('^[\\w\\.#]*$')) {
-            return null;
-        }
-
-        const c = selector.match('(?<tag>^\\w*)\\.(?<className>\\w*)');
-        if (c !== null) {
-            const p = el.parentElement;
-
-        }
+    css(property, value) {
+        property = toCamelCase(property);
+        this.forEach(function (n, i) {
+            n.style[property] = value;
+        });
+        return this;
     }
 
+    ancestor(selector) {
+        let ancestors = [];
+        this.forEach(function (n, i) {
+            ancestors.push(matchAncestor(n, selector));
+        });
+        return new makeBelieve(ancestors);
+    }
+
+    parent(selector = '*') {
+        let parents = [];
+        this.forEach(function (n, i) {
+            if (n.parentElement.matches(selector)) {
+                parents.push(n.parentElement);
+            }
+        });
+        return new makeBelieve(parents);
+    }
+
+    toggleClass(className) {
+        this.forEach(function (n, i) {
+            if (n.classList.contains(className)) {
+                n.classList.remove(className);
+            } else {
+                n.classList.add(className);
+            }
+        });
+        return this;
+    }
+
+    insertText(text) {
+        this.forEach(function (n, i) {
+            n.innerText = text;
+        });
+        return this;
+    }
+
+    prepend(subject) {
+        if (getType(subject) === 'String') {
+            const el = document.createElement('template');
+            el.innerHTML = subject;
+            subject = el.content.cloneNode(true);
+        }
+
+        this.forEach(function (n, i) {
+            n.prepend(subject);
+        });
+        return this;
+    }
+
+    append(subject) {
+        if (getType(subject) === 'String') {
+            const el = document.createElement('template');
+            el.innerHTML = subject;
+            subject = el.content.cloneNode(true);
+        }
+
+        this.forEach(function (n, i) {
+            n.append(subject);
+        });
+        return this;
+    }
+
+    onSubmit(callback) {
+        this.forEach(function (n, i) {
+            n.addEventListener('submit', callback);
+        });
+        return this;
+    }
+
+    onInput(callback) {
+        this.forEach(function (n, i) {
+            n.addEventListener('input', callback);
+        });
+        return this;
+    }
+
+    onClick(callback) {
+        this.forEach(function (n, i) {
+            n.addEventListener('click', callback);
+        });
+        return this;
+    }
+
+    delete() {
+        this.forEach(function (n, i) {
+            n.parentElement.removeChild(n);
+        });
+    }
 };
 
 const makeBelieveInit = (selector) => {
