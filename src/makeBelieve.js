@@ -51,6 +51,7 @@ const makeBelieve = class {
     get length() {
         return this._elements.length;
     }
+    
 
     forEach(callback) {
         this._elements.forEach(callback);
@@ -70,6 +71,12 @@ const makeBelieve = class {
             ancestors.push(matchAncestor(n, selector));
         });
         return new makeBelieve(ancestors);
+    }
+    //Selector defaults to * to fetch all, in the case of an empty 
+    grandParent(selector = '*'){
+        this._elements.parent;
+        //Return the parents of the parents
+        return this.parent().parent(selector);
     }
 
     parent(selector = '*') {
