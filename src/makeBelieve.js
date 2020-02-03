@@ -158,4 +158,45 @@ const makeBelieveInit = (selector) => {
     return new makeBelieve(selector);
 };
 
+const ajaxDefaults = {
+    url: null,
+    timeout: null,
+    data: {},
+    headers: [],
+    success: null,
+    fail: null,
+    beforeSend: null,
+};
+
+const ajax = (config) => {
+    const c = {...ajaxDefaults, ...config};
+
+    let xhr = new XMLHttpRequest();
+    xhr.open(c.method, c.url, true);
+
+    if (c.beforeSend !== null) {
+        c.beforeSend(xhr);
+    }
+
+    if (c.timeout !== null) {
+        xhr.timeout = c.timeout * 1000;
+    }
+
+    c.headers.forEach(function (h) {
+        xhr.setRequestHeader(h[0], h[1]);
+    });
+
+    xhr.onerror = c.fail;
+
+    xhr.onload = function () {
+        if (xhr.status === 200 && c.success !== null) {
+            c.success(xhr.response)
+        }
+    };
+
+    xhr.send(c.data);
+};
+
 window.__ = makeBelieveInit;
+
+window.__.ajax = ajax;
